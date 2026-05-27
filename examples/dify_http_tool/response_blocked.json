@@ -1,0 +1,16 @@
+{
+  "status": "blocked",
+  "claim_results": [
+    {
+      "claim_id": "claim_dify_1",
+      "status": "tool_required",
+      "violations": [
+        {
+          "code": "missing_required_tool_result",
+          "message": "Claim type numeric_conclusion requires at least one referenced tool result."
+        }
+      ],
+      "safe_verdict": "insufficient_evidence"
+    }
+  ]
+}

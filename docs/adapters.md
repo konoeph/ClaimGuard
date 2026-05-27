@@ -196,14 +196,54 @@ pip install -e ".[dev,server,langchain]"
 python examples/langchain_guard/demo.py
 ```
 
+## Dify HTTP Tool
+
+The Dify integration path uses the existing FastAPI server as an HTTP tool.
+This keeps the adapter boundary simple: Dify prepares structured claims,
+evidence, and tool results, then AgentClaimGuard verifies them.
+
+```text
+Dify workflow -> HTTP tool -> POST /v1/verify -> status + claim_results
+```
+
+Start the AgentClaimGuard API:
+
+```bash
+pip install "agentclaimguard[server]"
+uvicorn agentclaimguard.server.main:app --host 0.0.0.0 --port 8000
+```
+
+Configure the Dify HTTP tool with:
+
+```text
+Method: POST
+URL: http://<agentclaimguard-host>:8000/v1/verify
+Header: Content-Type: application/json
+Body: claims, evidence, and tool_results JSON
+```
+
+The example request in `examples/dify_http_tool/request.json` produces a
+blocked result because the numeric claim has source evidence but no calculator
+tool result.
+
+Route the returned `status` in Dify:
+
+```text
+passed  -> return answer
+blocked -> repair, retrieve more evidence, or human review
+```
+
+This is not a full Dify plugin package. It is a minimal HTTP tool integration
+example that reuses the server API.
+
 ## Planned Adapters
 
 - LangChain middleware hook
   - Add a deeper integration path after the Runnable wrapper API settles.
 - DSPy module wrapper
   - Expose policy-backed assertions as reusable pipeline checks.
-- Dify tool plugin
-  - Use the verifier as a Tool node or conditional branch.
+- Dify plugin package
+  - Extend the HTTP tool pattern into a packaged integration if there is demand.
 - RAGFlow post-verifier
   - Convert retrieved context into evidence records, then verify the final answer.
 

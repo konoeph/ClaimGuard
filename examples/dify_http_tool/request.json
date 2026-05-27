@@ -1,0 +1,24 @@
+{
+  "claims": [
+    {
+      "id": "claim_dify_1",
+      "type": "numeric_conclusion",
+      "text": "Revenue increased by 15%.",
+      "evidence_refs": ["ev_dify_1", "ev_dify_2"],
+      "tool_result_refs": []
+    }
+  ],
+  "evidence": [
+    {
+      "id": "ev_dify_1",
+      "type": "source_fact",
+      "content": "Current period revenue was 115."
+    },
+    {
+      "id": "ev_dify_2",
+      "type": "source_fact",
+      "content": "Prior period revenue was 100."
+    }
+  ],
+  "tool_results": []
+}

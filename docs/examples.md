@@ -75,3 +75,24 @@ async_final_answer=Revenue increased by 15%.
 async_guard_status=blocked
 async_claim_status=tool_required
 ```
+
+## Dify HTTP Tool
+
+The Dify HTTP tool example calls the existing FastAPI server with structured
+claims, evidence, and tool results.
+
+```text
+$ curl -X POST http://localhost:8000/v1/verify \
+  -H "Content-Type: application/json" \
+  --data @examples/dify_http_tool/request.json
+{
+  "status": "blocked",
+  "claim_results": [
+    {
+      "claim_id": "claim_dify_1",
+      "status": "tool_required",
+      "safe_verdict": "insufficient_evidence"
+    }
+  ]
+}
+```

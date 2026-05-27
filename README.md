@@ -188,6 +188,28 @@ Run the minimal adapter demo:
 python examples/langchain_guard/demo.py
 ```
 
+## Dify HTTP Tool
+
+AgentClaimGuard can be called from a Dify workflow as a plain HTTP tool using
+the FastAPI server:
+
+```text
+Dify workflow -> HTTP tool -> POST /v1/verify -> guard decision
+```
+
+Run the server and use the example payload:
+
+```bash
+pip install "agentclaimguard[server]"
+uvicorn agentclaimguard.server.main:app --host 0.0.0.0 --port 8000
+curl -X POST http://localhost:8000/v1/verify \
+  -H "Content-Type: application/json" \
+  --data @examples/dify_http_tool/request.json
+```
+
+See [examples/dify_http_tool/README.md](examples/dify_http_tool/README.md) for
+the Dify HTTP tool setup notes.
+
 ## Example Outputs
 
 See [docs/examples.md](docs/examples.md) for full sample output. Short version:
@@ -210,6 +232,7 @@ Claim -> Evidence -> Tool -> Verify
 - Roadmap: [docs/roadmap.md](docs/roadmap.md)
 - Adapter plan: [docs/adapters.md](docs/adapters.md)
 - LangChain demo: [examples/langchain_guard/demo.py](examples/langchain_guard/demo.py)
+- Dify HTTP tool example: [examples/dify_http_tool/README.md](examples/dify_http_tool/README.md)
 - Troubleshooting: [docs/troubleshooting.md](docs/troubleshooting.md)
 - Release checklist: [docs/release_checklist.md](docs/release_checklist.md)
 

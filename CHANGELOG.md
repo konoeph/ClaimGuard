@@ -12,6 +12,7 @@ All notable changes to AgentClaimGuard will be documented in this file.
 
 - Added a manual GitHub Actions workflow for PyPI Trusted Publishing.
 - Documented PyPI trusted publisher setup in the release checklist.
+- Updated the release checklist to make Trusted Publishing the preferred PyPI path.
 
 ## [0.3.1] - 2026-05-27
 

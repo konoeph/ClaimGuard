@@ -15,6 +15,11 @@ All notable changes to AgentClaimGuard will be documented in this file.
 - Clarified LangChain `ainvoke(...)` usage in the demo and docs.
 - Made LangChain adapter result-key collisions raise by default unless overwrite is enabled.
 
+### Maintenance
+
+- Updated CI installs to include optional framework adapter dependencies.
+- Normalized the Apache-2.0 license text for GitHub license detection.
+
 ## [0.2.1] - 2026-05-27
 
 ### Added

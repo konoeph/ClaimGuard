@@ -1,6 +1,6 @@
-from claimguard.core.claim import Claim
-from claimguard.core.evidence import Evidence
-from claimguard.core.result import Violation
+from agentclaimguard.core.claim import Claim
+from agentclaimguard.core.evidence import Evidence
+from agentclaimguard.core.result import Violation
 
 
 def validate_conflicting_evidence(

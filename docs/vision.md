@@ -1,6 +1,6 @@
 # Vision
 
-ClaimGuard exists because many LLM systems can produce confident answers before
+AgentClaimGuard exists because many LLM systems can produce confident answers before
 their key claims have earned the right to be returned.
 
 The project is built around a narrow but important idea:
@@ -11,7 +11,7 @@ Important LLM claims should be constrained by policy, evidence, and tool results
 
 ## The Boundary
 
-ClaimGuard does not try to be a universal fact checker.
+AgentClaimGuard does not try to be a universal fact checker.
 
 It does not decide whether a claim is true by itself. Instead, it answers a more
 operational question:
@@ -22,7 +22,7 @@ Is this claim allowed to be returned under the active evidence and tool policy?
 
 That boundary matters. A policy can require citations, source facts, calculator
 results, regulation evidence, test results, or other deterministic inputs before
-the claim can pass. When those requirements are missing, ClaimGuard blocks or
+the claim can pass. When those requirements are missing, AgentClaimGuard blocks or
 downgrades the claim instead of letting the model present it as settled.
 
 ## Why Claim-Level Verification
@@ -38,7 +38,7 @@ Most LLM application reliability work happens around larger objects:
 Those layers are useful, but they can miss the smaller unit where risk often
 appears: a specific conclusion inside an otherwise fluent answer.
 
-ClaimGuard treats the claim as the unit of control. That makes it possible to
+AgentClaimGuard treats the claim as the unit of control. That makes it possible to
 ask direct questions:
 
 - Does this numeric conclusion cite source facts?
@@ -55,7 +55,7 @@ certainty harder to ship.
 The first version should stay small and sharp.
 
 v0.1 assumes that upstream systems provide structured claims, evidence, and tool
-results. ClaimGuard then runs deterministic policy checks and returns a clear
+results. AgentClaimGuard then runs deterministic policy checks and returns a clear
 verification result.
 
 That means v0.1 intentionally avoids:
@@ -80,7 +80,7 @@ Unsupported claims are blocked, downgraded, or marked for review.
 
 ### Be Framework-Agnostic
 
-ClaimGuard should work after a plain LLM call, inside a RAG pipeline, behind an
+AgentClaimGuard should work after a plain LLM call, inside a RAG pipeline, behind an
 HTTP endpoint, or as a node in an agent graph.
 
 The core should not depend on any one orchestration framework.
@@ -106,9 +106,9 @@ Blocking is only useful when the next step is clear.
 
 ### Do Not Overclaim
 
-ClaimGuard is a reliability constraint layer. It is not an oracle.
+AgentClaimGuard is a reliability constraint layer. It is not an oracle.
 
-Passing a ClaimGuard policy means the claim satisfied the configured evidence
+Passing an AgentClaimGuard policy means the claim satisfied the configured evidence
 and tool requirements. It does not mean the world itself has been proven.
 
 That distinction should stay visible in the API, docs, examples, and roadmap.

@@ -1,14 +1,14 @@
 from collections.abc import Iterable
 
-from claimguard.core.claim import Claim
-from claimguard.core.evidence import Evidence
-from claimguard.core.policy import Policy
-from claimguard.core.result import VerificationResult
-from claimguard.core.tool_result import ToolResult
-from claimguard.core.verifier import verify_claims as run_verifier
+from agentclaimguard.core.claim import Claim
+from agentclaimguard.core.evidence import Evidence
+from agentclaimguard.core.policy import Policy
+from agentclaimguard.core.result import VerificationResult
+from agentclaimguard.core.tool_result import ToolResult
+from agentclaimguard.core.verifier import verify_claims as run_verifier
 
 
-class ClaimGuard:
+class AgentClaimGuard:
     def __init__(self, policy: Policy):
         self.policy = policy
 
@@ -46,7 +46,7 @@ def verify_claims(
     tool_results: Iterable[ToolResult | dict],
     policy: Policy,
 ) -> VerificationResult:
-    return ClaimGuard(policy=policy).verify(
+    return AgentClaimGuard(policy=policy).verify(
         claims=claims,
         evidence=evidence,
         tool_results=tool_results,

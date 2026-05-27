@@ -1,6 +1,6 @@
 # Quickstart
 
-Install ClaimGuard in editable mode while developing:
+Install AgentClaimGuard in editable mode while developing:
 
 ```bash
 pip install -e ".[dev,server]"
@@ -15,7 +15,7 @@ python examples/numeric_conclusion/demo.py
 Start the OpenAPI server:
 
 ```bash
-uvicorn claimguard.server.main:app --reload
+uvicorn agentclaimguard.server.main:app --reload
 ```
 
 Submit a verification request:

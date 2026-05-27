@@ -1,7 +1,7 @@
-from claimguard.core.claim import Claim
-from claimguard.core.policy import ClaimTypePolicy
-from claimguard.core.result import Violation
-from claimguard.core.tool_result import ToolResult
+from agentclaimguard.core.claim import Claim
+from agentclaimguard.core.policy import ClaimTypePolicy
+from agentclaimguard.core.result import Violation
+from agentclaimguard.core.tool_result import ToolResult
 
 
 def validate_required_tools(

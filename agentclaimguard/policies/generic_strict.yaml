@@ -3,7 +3,7 @@ version: "0.1"
 
 default_fallback:
   verdict: need_check
-  reason: The claim did not satisfy the active ClaimGuard policy.
+  reason: The claim did not satisfy the active AgentClaimGuard policy.
 
 claim_types:
   numeric_conclusion:

@@ -3,7 +3,7 @@ from typing import Any
 
 from pydantic import BaseModel, Field, model_validator
 
-from claimguard.utils.yaml_loader import load_yaml
+from agentclaimguard.utils.yaml_loader import load_yaml
 
 
 class EvidenceRequirement(BaseModel):

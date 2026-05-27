@@ -1,9 +1,9 @@
 # Contributing
 
-Thanks for your interest in ClaimGuard.
+Thanks for your interest in AgentClaimGuard.
 
-ClaimGuard is intentionally small in v0.1. The project focuses on one boundary:
-structured claims come in, and ClaimGuard checks whether those claims are allowed
+AgentClaimGuard is intentionally small in v0.1. The project focuses on one boundary:
+structured claims come in, and AgentClaimGuard checks whether those claims are allowed
 to be returned under a user-defined evidence and tool policy.
 
 ## Development Setup
@@ -16,7 +16,7 @@ pip install -e ".[dev,server]"
 
 ```bash
 python -m pytest -q
-python -m compileall claimguard examples tests
+python -m compileall agentclaimguard examples tests
 ```
 
 ## Contribution Guidelines

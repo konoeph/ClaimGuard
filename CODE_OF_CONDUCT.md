@@ -1,6 +1,6 @@
 # Code of Conduct
 
-ClaimGuard aims to be a welcoming, useful open-source project for people
+AgentClaimGuard aims to be a welcoming, useful open-source project for people
 building reliable LLM applications.
 
 ## Our Standards

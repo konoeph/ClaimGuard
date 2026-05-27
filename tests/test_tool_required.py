@@ -1,10 +1,10 @@
-from claimguard import ClaimGuard, Policy
+from agentclaimguard import AgentClaimGuard, Policy
 
 
 def test_missing_required_tool_blocks_numeric_claim() -> None:
-    policy = Policy.load("claimguard/policies/generic_numeric.yaml")
+    policy = Policy.load("agentclaimguard/policies/generic_numeric.yaml")
 
-    result = ClaimGuard(policy).verify(
+    result = AgentClaimGuard(policy).verify(
         claims=[
             {
                 "id": "claim_1",
@@ -28,9 +28,9 @@ def test_missing_required_tool_blocks_numeric_claim() -> None:
 
 
 def test_successful_required_tool_passes_numeric_claim() -> None:
-    policy = Policy.load("claimguard/policies/generic_numeric.yaml")
+    policy = Policy.load("agentclaimguard/policies/generic_numeric.yaml")
 
-    result = ClaimGuard(policy).verify(
+    result = AgentClaimGuard(policy).verify(
         claims=[
             {
                 "id": "claim_1",

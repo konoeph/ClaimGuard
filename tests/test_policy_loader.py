@@ -1,10 +1,10 @@
 from pathlib import Path
 
-from claimguard import Policy
+from agentclaimguard import Policy
 
 
 def test_policy_loader_loads_generic_policy() -> None:
-    policy = Policy.load(Path("claimguard/policies/generic_strict.yaml"))
+    policy = Policy.load(Path("agentclaimguard/policies/generic_strict.yaml"))
 
     assert policy.name == "generic_strict"
     assert "numeric_conclusion" in policy.claim_types

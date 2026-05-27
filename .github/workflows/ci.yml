@@ -34,5 +34,5 @@ jobs:
 
       - name: Compile check
         run: |
-          python -m compileall claimguard examples tests
+          python -m compileall agentclaimguard examples tests
 

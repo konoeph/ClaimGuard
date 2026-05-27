@@ -1,12 +1,12 @@
 # Changelog
 
-All notable changes to ClaimGuard will be documented in this file.
+All notable changes to AgentClaimGuard will be documented in this file.
 
 ## [0.1.0] - 2026-05-27
 
 ### Added
 
-- Initial ClaimGuard core runtime.
+- Initial AgentClaimGuard core runtime.
 - Pydantic schemas for Claim, Evidence, ToolResult, Policy, and VerificationResult.
 - YAML-based policy loading.
 - Core verifier for claim-level evidence and tool-result checks.

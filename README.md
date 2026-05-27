@@ -1,11 +1,11 @@
-# ClaimGuard
+# AgentClaimGuard
 
-ClaimGuard is a framework-agnostic evidence gate for LLM claims.
+AgentClaimGuard is a framework-agnostic evidence gate for LLM agent claims.
 
 It verifies whether important claims in LLM outputs are supported by evidence,
 tool results, and user-defined policies.
 
-ClaimGuard does not decide whether a claim is true by itself. It verifies
+AgentClaimGuard does not decide whether a claim is true by itself. It verifies
 whether a claim is allowed to be returned under a user-defined evidence and tool
 policy.
 
@@ -13,7 +13,7 @@ No evidence, no claim.
 No tool result, no numeric conclusion.  
 No source, no compliance judgment.
 
-## Why ClaimGuard?
+## Why AgentClaimGuard?
 
 LLM applications can produce fluent, structured, and confident answers even when
 the key claims are unsupported.
@@ -22,7 +22,7 @@ RAG gives context, but does not guarantee the answer is grounded. Tool calling
 gives results, but does not guarantee the model uses them. Structured output
 gives JSON, but does not guarantee the judgment is valid.
 
-ClaimGuard adds a lightweight runtime layer to verify claims before they are
+AgentClaimGuard adds a lightweight runtime layer to verify claims before they are
 returned to users.
 
 ## Install
@@ -34,10 +34,10 @@ pip install -e ".[dev,server]"
 ## Quickstart
 
 ```python
-from claimguard import ClaimGuard, Policy
+from agentclaimguard import AgentClaimGuard, Policy
 
-policy = Policy.load("claimguard/policies/generic_strict.yaml")
-guard = ClaimGuard(policy=policy)
+policy = Policy.load("agentclaimguard/policies/generic_strict.yaml")
+guard = AgentClaimGuard(policy=policy)
 
 result = guard.verify(
     claims=[
@@ -84,7 +84,7 @@ Claim -> Evidence -> Tool -> Verify
 ## OpenAPI Server
 
 ```bash
-uvicorn claimguard.server.main:app --reload
+uvicorn agentclaimguard.server.main:app --reload
 ```
 
 Then call:
@@ -103,9 +103,9 @@ python examples/compliance_judgement/demo.py
 python examples/rag_citation/demo.py
 ```
 
-## What ClaimGuard Is Not
+## What AgentClaimGuard Is Not
 
-ClaimGuard is not an agent framework, RAG engine, vector database, or
+AgentClaimGuard is not an agent framework, RAG engine, vector database, or
 general-purpose safety guardrail.
 
 It is a claim-level reliability layer for LLM applications.

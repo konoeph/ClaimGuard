@@ -1,10 +1,10 @@
-from claimguard import ClaimGuard, Policy
+from agentclaimguard import AgentClaimGuard, Policy
 
 
 def test_missing_required_evidence_blocks_claim() -> None:
-    policy = Policy.load("claimguard/policies/generic_compliance.yaml")
+    policy = Policy.load("agentclaimguard/policies/generic_compliance.yaml")
 
-    result = ClaimGuard(policy).verify(
+    result = AgentClaimGuard(policy).verify(
         claims=[
             {
                 "id": "claim_1",

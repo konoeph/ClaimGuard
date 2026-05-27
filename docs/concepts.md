@@ -1,6 +1,6 @@
 # Concepts
 
-ClaimGuard verifies claim-level reliability with a simple flow:
+AgentClaimGuard verifies claim-level reliability with a simple flow:
 
 ```text
 Claim -> Evidence -> Tool -> Verify

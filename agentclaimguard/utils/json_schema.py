@@ -1,8 +1,8 @@
-from claimguard.core.claim import Claim
-from claimguard.core.evidence import Evidence
-from claimguard.core.policy import Policy
-from claimguard.core.result import VerificationResult
-from claimguard.core.tool_result import ToolResult
+from agentclaimguard.core.claim import Claim
+from agentclaimguard.core.evidence import Evidence
+from agentclaimguard.core.policy import Policy
+from agentclaimguard.core.result import VerificationResult
+from agentclaimguard.core.tool_result import ToolResult
 
 
 def export_json_schemas() -> dict:

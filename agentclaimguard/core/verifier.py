@@ -1,20 +1,20 @@
 from collections.abc import Iterable
 
-from claimguard.core.claim import Claim
-from claimguard.core.evidence import Evidence
-from claimguard.core.policy import Policy
-from claimguard.core.result import (
+from agentclaimguard.core.claim import Claim
+from agentclaimguard.core.evidence import Evidence
+from agentclaimguard.core.policy import Policy
+from agentclaimguard.core.result import (
     ClaimVerificationResult,
     ClaimStatus,
     VerificationResult,
     Violation,
 )
-from claimguard.core.tool_result import ToolResult
-from claimguard.validators.citation_binding import validate_citation_binding
-from claimguard.validators.conflict_check import validate_conflicting_evidence
-from claimguard.validators.evidence_required import validate_required_evidence
-from claimguard.validators.forbidden_verdict import validate_forbidden_rules
-from claimguard.validators.tool_required import validate_required_tools
+from agentclaimguard.core.tool_result import ToolResult
+from agentclaimguard.validators.citation_binding import validate_citation_binding
+from agentclaimguard.validators.conflict_check import validate_conflicting_evidence
+from agentclaimguard.validators.evidence_required import validate_required_evidence
+from agentclaimguard.validators.forbidden_verdict import validate_forbidden_rules
+from agentclaimguard.validators.tool_required import validate_required_tools
 
 
 def verify_claims(

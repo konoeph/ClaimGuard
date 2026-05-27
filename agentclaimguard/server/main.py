@@ -2,8 +2,8 @@ from pathlib import Path
 
 from fastapi import FastAPI
 
-from claimguard import ClaimGuard, Policy
-from claimguard.server.schemas import RepairRequest, VerifyRequest
+from agentclaimguard import AgentClaimGuard, Policy
+from agentclaimguard.server.schemas import RepairRequest, VerifyRequest
 
 
 DEFAULT_POLICY_PATH = (
@@ -11,9 +11,9 @@ DEFAULT_POLICY_PATH = (
 )
 
 app = FastAPI(
-    title="ClaimGuard",
+    title="AgentClaimGuard",
     version="0.1.0",
-    description="A framework-agnostic evidence gate for LLM claims.",
+    description="A framework-agnostic evidence gate for LLM agent claims.",
 )
 
 
@@ -25,7 +25,7 @@ def health() -> dict[str, str]:
 @app.post("/v1/verify")
 def verify(request: VerifyRequest):
     policy = request.policy or Policy.load(DEFAULT_POLICY_PATH)
-    guard = ClaimGuard(policy=policy)
+    guard = AgentClaimGuard(policy=policy)
     return guard.verify(
         claims=request.claims,
         evidence=request.evidence,
@@ -36,7 +36,7 @@ def verify(request: VerifyRequest):
 @app.post("/v1/repair")
 def repair(request: RepairRequest):
     policy = request.policy or Policy.load(DEFAULT_POLICY_PATH)
-    guard = ClaimGuard(policy=policy)
+    guard = AgentClaimGuard(policy=policy)
     return guard.repair(
         claims=request.claims,
         evidence=request.evidence,

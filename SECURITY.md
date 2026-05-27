@@ -1,6 +1,6 @@
 # Security Policy
 
-ClaimGuard is an early-stage project. Please report security issues privately
+AgentClaimGuard is an early-stage project. Please report security issues privately
 instead of opening a public issue.
 
 ## Supported Versions

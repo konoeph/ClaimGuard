@@ -1,6 +1,6 @@
 from fastapi.testclient import TestClient
 
-from claimguard.server.main import app
+from agentclaimguard.server.main import app
 
 
 def test_health_endpoint() -> None:

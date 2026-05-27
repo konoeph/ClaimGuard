@@ -1,10 +1,10 @@
-from claimguard import ClaimGuard, Policy
+from agentclaimguard import AgentClaimGuard, Policy
 
 
 def test_invalid_evidence_ref_blocks_claim() -> None:
-    policy = Policy.load("claimguard/policies/generic_rag.yaml")
+    policy = Policy.load("agentclaimguard/policies/generic_rag.yaml")
 
-    result = ClaimGuard(policy).verify(
+    result = AgentClaimGuard(policy).verify(
         claims=[
             {
                 "id": "claim_1",

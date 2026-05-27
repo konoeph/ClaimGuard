@@ -1,9 +1,9 @@
 from pydantic import BaseModel, Field
 
-from claimguard.core.claim import Claim
-from claimguard.core.evidence import Evidence
-from claimguard.core.policy import Policy
-from claimguard.core.tool_result import ToolResult
+from agentclaimguard.core.claim import Claim
+from agentclaimguard.core.evidence import Evidence
+from agentclaimguard.core.policy import Policy
+from agentclaimguard.core.tool_result import ToolResult
 
 
 class VerifyRequest(BaseModel):

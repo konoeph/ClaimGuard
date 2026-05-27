@@ -1,5 +1,6 @@
 import asyncio
 
+import pytest
 from langchain_core.runnables import RunnableLambda
 
 from agentclaimguard import Policy
@@ -245,3 +246,190 @@ def test_guarded_runnable_can_overwrite_result_key_when_enabled() -> None:
     )
 
     assert result["guard_result"].status == "blocked"
+
+
+def test_guarded_runnable_prefers_output_fields_over_input_fields() -> None:
+    policy = Policy.load_builtin("generic_numeric")
+    runnable = RunnableLambda(
+        lambda payload: {
+            "final_answer": payload["question"],
+            "claims": [
+                {
+                    "id": "claim_out",
+                    "type": "numeric_conclusion",
+                    "text": "Revenue increased by 15%.",
+                    "evidence_refs": ["ev_out_1", "ev_out_2"],
+                    "tool_result_refs": ["tool_out_1"],
+                }
+            ],
+            "evidence": [
+                {
+                    "id": "ev_out_1",
+                    "type": "source_fact",
+                    "content": "Revenue was 115.",
+                },
+                {
+                    "id": "ev_out_2",
+                    "type": "source_fact",
+                    "content": "Revenue was 100.",
+                },
+            ],
+            "tool_results": [
+                {
+                    "id": "tool_out_1",
+                    "tool_name": "calculator",
+                    "status": "success",
+                    "output": {"growth_rate": "15%"},
+                }
+            ],
+        }
+    )
+    guarded = create_guarded_runnable(runnable=runnable, policy=policy)
+
+    result = guarded.invoke(
+        {
+            "question": "Revenue increased by 15%.",
+            "claims": [
+                {
+                    "id": "claim_in",
+                    "type": "numeric_conclusion",
+                    "text": "Revenue increased by 15%.",
+                    "evidence_refs": ["ev_in_1", "ev_in_2"],
+                }
+            ],
+            "evidence": [
+                {"id": "ev_in_1", "type": "source_fact", "content": "Revenue was 115."},
+                {"id": "ev_in_2", "type": "source_fact", "content": "Revenue was 100."},
+            ],
+            "tool_results": [],
+        }
+    )
+
+    assert result["guard_result"].status == "passed"
+    assert result["guard_result"].claim_results[0].claim_id == "claim_out"
+
+
+def test_guarded_runnable_falls_back_to_input_fields_when_output_missing() -> None:
+    policy = Policy.load_builtin("generic_numeric")
+    runnable = RunnableLambda(
+        lambda payload: {
+            "final_answer": payload["question"],
+        }
+    )
+    guarded = create_guarded_runnable(runnable=runnable, policy=policy)
+
+    result = guarded.invoke(
+        {
+            "question": "Revenue increased by 15%.",
+            "claims": [
+                {
+                    "id": "claim_in",
+                    "type": "numeric_conclusion",
+                    "text": "Revenue increased by 15%.",
+                    "evidence_refs": ["ev_in_1", "ev_in_2"],
+                    "tool_result_refs": ["tool_in_1"],
+                }
+            ],
+            "evidence": [
+                {"id": "ev_in_1", "type": "source_fact", "content": "Revenue was 115."},
+                {"id": "ev_in_2", "type": "source_fact", "content": "Revenue was 100."},
+            ],
+            "tool_results": [
+                {
+                    "id": "tool_in_1",
+                    "tool_name": "calculator",
+                    "status": "success",
+                    "output": {"growth_rate": "15%"},
+                }
+            ],
+        }
+    )
+
+    assert result["final_answer"] == "Revenue increased by 15%."
+    assert result["guard_result"].status == "passed"
+    assert result["guard_result"].claim_results[0].claim_id == "claim_in"
+
+
+def test_guarded_runnable_supports_callable_field_extractors() -> None:
+    policy = Policy.load_builtin("generic_numeric")
+    runnable = RunnableLambda(
+        lambda payload: {
+            "final_answer": payload["question"],
+            "verification_payload": {
+                "claims": payload["prepared_claims"],
+                "tool_runs": payload["prepared_tool_runs"],
+            },
+        }
+    )
+    guarded = create_guarded_runnable(
+        runnable=runnable,
+        policy=policy,
+        field_map={
+            "claims": lambda input, output: output["verification_payload"]["claims"],
+            "evidence": lambda input, output: input["prepared_evidence"],
+            "tool_results": lambda input, output: output["verification_payload"][
+                "tool_runs"
+            ],
+        },
+    )
+
+    result = guarded.invoke(
+        {
+            "question": "Revenue increased by 15%.",
+            "prepared_claims": [
+                {
+                    "id": "claim_callable",
+                    "type": "numeric_conclusion",
+                    "text": "Revenue increased by 15%.",
+                    "evidence_refs": ["ev_callable_1", "ev_callable_2"],
+                    "tool_result_refs": ["tool_callable_1"],
+                }
+            ],
+            "prepared_evidence": [
+                {
+                    "id": "ev_callable_1",
+                    "type": "source_fact",
+                    "content": "Revenue was 115.",
+                },
+                {
+                    "id": "ev_callable_2",
+                    "type": "source_fact",
+                    "content": "Revenue was 100.",
+                },
+            ],
+            "prepared_tool_runs": [
+                {
+                    "id": "tool_callable_1",
+                    "tool_name": "calculator",
+                    "status": "success",
+                    "output": {"growth_rate": "15%"},
+                }
+            ],
+        }
+    )
+
+    assert result["guard_result"].status == "passed"
+    assert result["guard_result"].claim_results[0].claim_id == "claim_callable"
+
+
+def test_guarded_runnable_rejects_non_list_field_values() -> None:
+    policy = Policy.load_builtin("generic_numeric")
+    runnable = RunnableLambda(
+        lambda payload: {
+            "claims": {"id": "claim_1"},
+            "evidence": payload["evidence"],
+            "tool_results": payload["tool_results"],
+        }
+    )
+    guarded = create_guarded_runnable(runnable=runnable, policy=policy)
+
+    with pytest.raises(TypeError, match="must resolve to a list or None"):
+        guarded.invoke(
+            {
+                "evidence": [
+                    {"id": "ev_1", "type": "source_fact", "content": "Revenue was 115."},
+                    {"id": "ev_2", "type": "source_fact", "content": "Revenue was 100."},
+                ],
+                "tool_results": [],
+            }
+        )

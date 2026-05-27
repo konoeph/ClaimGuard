@@ -51,6 +51,17 @@ guarded = create_guarded_runnable(
 )
 ```
 
+## Field resolution
+
+- Put `claims`, `evidence`, and `tool_results` in the input when they are
+  prepared before the chain runs.
+- Return them in the output when the Runnable itself produces or transforms
+  them.
+- Output fields take precedence over input fields for string-based `field_map`
+  entries.
+- Callable field extractors receive both `input` and `output` and can choose
+  either source directly.
+
 ## Result key collisions
 
 If the wrapped Runnable already returns a `guard_result` field, the adapter

@@ -151,6 +151,23 @@ guarded = create_guarded_runnable(
 )
 ```
 
+### LangChain field resolution
+
+For string-based `field_map` entries, AgentClaimGuard resolves fields in this
+order:
+
+1. Runnable output
+2. Runnable input
+
+This means a chain can return `claims`, `evidence`, and `tool_results` itself,
+or pass them through from the original input payload.
+
+For callable extractors, the callable receives both `input` and `output` and
+fully controls extraction.
+
+Resolved values must be lists or `None`. Missing values are treated as empty
+lists.
+
 Async chains can use the same wrapper API:
 
 ```python

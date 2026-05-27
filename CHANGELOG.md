@@ -14,6 +14,13 @@ All notable changes to AgentClaimGuard will be documented in this file.
 
 - Clarified LangChain `ainvoke(...)` usage in the demo and docs.
 - Made LangChain adapter result-key collisions raise by default unless overwrite is enabled.
+- Clarified LangChain field resolution order between Runnable output and input.
+
+### Tests
+
+- Added coverage for LangChain output-first field resolution.
+- Added coverage for LangChain input fallback and callable field extractors.
+- Added coverage for LangChain non-list field rejection.
 
 ### Maintenance
 

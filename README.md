@@ -152,7 +152,9 @@ print(result["guard_result"].status)
 ```
 
 Use `field_map` when the Runnable output uses custom keys for claims, evidence,
-or tool results. `ainvoke(...)` is also supported for async chains.
+or tool results. String-based field maps resolve Runnable output first and then
+fall back to Runnable input; callable extractors receive both input and output.
+`ainvoke(...)` is also supported for async chains.
 
 By default, the wrapper raises `ValueError` if the Runnable output already
 contains the chosen `result_key`. Use a different `result_key`, or set

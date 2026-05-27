@@ -1,29 +1,34 @@
 # Roadmap
 
-## v0.1 Core Runtime
+## v0.1.1 Polish
 
-- Core schema
-- YAML policy runtime
-- Basic verifier
-- Fallback output
-- OpenAPI server
-- Numeric, compliance, and RAG citation demos
+- README badges
+- shorter quickstart
+- example output snippets
+- issue templates
+- adapter docs cleanup
 
-## v0.2 Framework Adapters
+## v0.2.0 Framework Adapters
 
-- LangChain adapter
+- LangChain middleware / Runnable wrapper
 - LangGraph node
-- More integration examples
+- more integration examples
 
-## v0.3 Claim Extraction
+## v0.3.0 Claim Extraction / OpenAPI Examples
 
-- Optional claim extraction from unstructured LLM outputs
-- Evidence binding prompts
-- Structured output conversion helpers
+- optional claim extraction from unstructured LLM outputs
+- evidence binding prompts
+- structured output conversion helpers
+- more OpenAPI usage examples
 
-## v0.5 Optional LLM Verifier
+## v0.4.0 Platform Integrations
 
-- Semantic support checks
-- Contradiction checks
-- Configurable model interface
+- Dify tool plugin
+- RAGFlow adapter
+- integration examples
 
+## v0.5.0 Optional LLM Verifier
+
+- semantic support checks
+- contradiction checks
+- configurable model interface

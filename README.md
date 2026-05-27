@@ -1,5 +1,9 @@
 # AgentClaimGuard
 
+[![CI](https://github.com/konoeph/AgentClaimGuard/actions/workflows/ci.yml/badge.svg)](https://github.com/konoeph/AgentClaimGuard/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/konoeph/AgentClaimGuard)](https://github.com/konoeph/AgentClaimGuard/releases/latest)
+[![License](https://img.shields.io/github/license/konoeph/AgentClaimGuard)](./LICENSE)
+
 AgentClaimGuard is a framework-agnostic evidence gate for LLM agent claims.
 
 It verifies whether important claims in LLM outputs are supported by evidence,
@@ -33,47 +37,32 @@ pip install -e ".[dev,server]"
 
 ## Quickstart
 
+```bash
+pip install -e ".[dev,server]"
+python examples/numeric_conclusion/demo.py
+uvicorn agentclaimguard.server.main:app --reload
+```
+
 ```python
 from agentclaimguard import AgentClaimGuard, Policy
 
-policy = Policy.load("agentclaimguard/policies/generic_strict.yaml")
-guard = AgentClaimGuard(policy=policy)
-
-result = guard.verify(
-    claims=[
-        {
-            "id": "claim_1",
-            "type": "numeric_conclusion",
-            "text": "Revenue increased by 15%.",
-            "evidence_refs": ["ev_1", "ev_2"],
-            "tool_result_refs": [],
-        }
-    ],
-    evidence=[
-        {
-            "id": "ev_1",
-            "type": "source_fact",
-            "source": "annual_report.pdf",
-            "locator": "page 12",
-            "content": "Revenue in 2025 was 115 million yuan.",
-        },
-        {
-            "id": "ev_2",
-            "type": "source_fact",
-            "source": "annual_report.pdf",
-            "locator": "page 10",
-            "content": "Revenue in 2024 was 100 million yuan.",
-        },
-    ],
-    tool_results=[],
+guard = AgentClaimGuard(
+    Policy.load("agentclaimguard/policies/generic_strict.yaml")
 )
+result = guard.verify(claims=[], evidence=[], tool_results=[])
 
 print(result.status)
-print(result.safe_output)
 ```
 
-The claim is blocked because the policy requires a calculator tool result for
-numeric conclusions.
+## Example Outputs
+
+See [docs/examples.md](docs/examples.md) for full sample output. Short version:
+
+```text
+numeric_conclusion  -> blocked / tool_required / insufficient_evidence
+compliance_judgement -> blocked / insufficient_evidence / need_check
+rag_citation        -> blocked / insufficient_evidence
+```
 
 ## Core Flow
 
@@ -81,27 +70,11 @@ numeric conclusions.
 Claim -> Evidence -> Tool -> Verify
 ```
 
-## OpenAPI Server
+## Issues & Roadmap
 
-```bash
-uvicorn agentclaimguard.server.main:app --reload
-```
-
-Then call:
-
-```bash
-curl -X POST http://127.0.0.1:8000/v1/verify \
-  -H "Content-Type: application/json" \
-  -d @examples/numeric_conclusion/sample_input.json
-```
-
-## Examples
-
-```bash
-python examples/numeric_conclusion/demo.py
-python examples/compliance_judgement/demo.py
-python examples/rag_citation/demo.py
-```
+- Open issues: [GitHub Issues](https://github.com/konoeph/AgentClaimGuard/issues)
+- Roadmap: [docs/roadmap.md](docs/roadmap.md)
+- Adapter plan: [docs/adapters.md](docs/adapters.md)
 
 ## What AgentClaimGuard Is Not
 

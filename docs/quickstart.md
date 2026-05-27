@@ -26,3 +26,4 @@ curl -X POST http://127.0.0.1:8000/v1/verify \
   -d @examples/numeric_conclusion/sample_input.json
 ```
 
+See [examples.md](examples.md) for the expected outputs from all three demos.

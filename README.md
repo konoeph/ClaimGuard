@@ -5,6 +5,10 @@ ClaimGuard is a framework-agnostic evidence gate for LLM claims.
 It verifies whether important claims in LLM outputs are supported by evidence,
 tool results, and user-defined policies.
 
+ClaimGuard does not decide whether a claim is true by itself. It verifies
+whether a claim is allowed to be returned under a user-defined evidence and tool
+policy.
+
 No evidence, no claim.  
 No tool result, no numeric conclusion.  
 No source, no compliance judgment.
@@ -105,4 +109,3 @@ ClaimGuard is not an agent framework, RAG engine, vector database, or
 general-purpose safety guardrail.
 
 It is a claim-level reliability layer for LLM applications.
-

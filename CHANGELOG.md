@@ -8,6 +8,10 @@ All notable changes to AgentClaimGuard will be documented in this file.
 
 - Restored the canonical Apache-2.0 license text for GitHub license detection.
 - Added explicit copyright ownership for Hao Peng in project metadata.
+- Added package metadata for PyPI project links.
+- Added release tooling optional dependencies for build and twine.
+- Updated installation and release checklist notes for PyPI readiness.
+- Removed duplicate policy-file wheel packaging configuration.
 
 ## [0.3.0] - 2026-05-27
 

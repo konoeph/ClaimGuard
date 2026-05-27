@@ -34,11 +34,21 @@ returned to users.
 
 ## Install
 
+From PyPI, after the package is published:
+
 ```bash
-pip install -e ".[dev,server]"
+pip install agentclaimguard
 ```
 
-For the framework adapter examples:
+With optional adapters and server dependencies:
+
+```bash
+pip install "agentclaimguard[server]"
+pip install "agentclaimguard[langgraph]"
+pip install "agentclaimguard[langchain]"
+```
+
+For local development:
 
 ```bash
 pip install -e ".[dev,server,langgraph,langchain]"

@@ -28,6 +28,12 @@ dependencies = [
   "PyYAML>=6.0",
 ]
 
+[project.urls]
+Homepage = "https://github.com/konoeph/AgentClaimGuard"
+Repository = "https://github.com/konoeph/AgentClaimGuard"
+Issues = "https://github.com/konoeph/AgentClaimGuard/issues"
+Changelog = "https://github.com/konoeph/AgentClaimGuard/blob/main/CHANGELOG.md"
+
 [project.optional-dependencies]
 server = [
   "fastapi>=0.110",
@@ -43,6 +49,10 @@ dev = [
   "httpx>=0.27",
   "pytest>=8.0",
 ]
+release = [
+  "build>=1.2",
+  "twine>=5.0",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -50,9 +60,6 @@ pythonpath = ["."]
 
 [tool.hatch.build.targets.wheel]
 packages = ["agentclaimguard"]
-
-[tool.hatch.build.targets.wheel.force-include]
-"agentclaimguard/policies" = "agentclaimguard/policies"
 
 [tool.ruff]
 line-length = 88

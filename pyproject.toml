@@ -34,6 +34,7 @@ server = [
   "uvicorn[standard]>=0.27",
 ]
 dev = [
+  "httpx>=0.27",
   "pytest>=8.0",
 ]
 

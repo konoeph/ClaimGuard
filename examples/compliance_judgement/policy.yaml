@@ -1,0 +1,17 @@
+name: compliance_demo
+version: "0.1"
+
+claim_types:
+  compliance_judgement:
+    required_evidence:
+      - type: regulation
+        min_count: 1
+      - type: source_fact
+        min_count: 1
+    forbidden:
+      - use_model_memory_as_authority
+      - unsupported_pass_fail
+    fallback:
+      verdict: need_check
+      reason: Compliance judgments require rule evidence and source facts.
+

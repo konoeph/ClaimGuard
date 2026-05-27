@@ -1,0 +1,22 @@
+{
+  "claims": [
+    {
+      "id": "claim_3",
+      "type": "citation_required_answer",
+      "text": "The refund policy allows cancellation within 14 days.",
+      "evidence_refs": [],
+      "tool_result_refs": []
+    }
+  ],
+  "evidence": [
+    {
+      "id": "ev_1",
+      "type": "retrieved_context",
+      "source": "policy.md",
+      "locator": "refunds",
+      "content": "Customers may cancel eligible orders within 14 days."
+    }
+  ],
+  "tool_results": []
+}
+

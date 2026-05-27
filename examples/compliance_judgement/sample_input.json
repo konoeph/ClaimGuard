@@ -1,0 +1,23 @@
+{
+  "claims": [
+    {
+      "id": "claim_2",
+      "type": "compliance_judgement",
+      "text": "This practice is compliant.",
+      "verdict": "pass",
+      "evidence_refs": ["ev_1"],
+      "tool_result_refs": []
+    }
+  ],
+  "evidence": [
+    {
+      "id": "ev_1",
+      "type": "source_fact",
+      "source": "audit_notes.md",
+      "locator": "section 2",
+      "content": "The vendor stores customer records for 30 days."
+    }
+  ],
+  "tool_results": []
+}
+

@@ -1,0 +1,14 @@
+name: rag_demo
+version: "0.1"
+
+claim_types:
+  citation_required_answer:
+    required_evidence:
+      - type: retrieved_context
+        min_count: 1
+    forbidden:
+      - answer_without_citation
+    fallback:
+      verdict: insufficient_evidence
+      reason: Answers must cite retrieved context.
+

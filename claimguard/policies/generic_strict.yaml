@@ -1,0 +1,43 @@
+name: generic_strict
+version: "0.1"
+
+default_fallback:
+  verdict: need_check
+  reason: The claim did not satisfy the active ClaimGuard policy.
+
+claim_types:
+  numeric_conclusion:
+    required_evidence:
+      - type: source_fact
+        min_count: 2
+    required_tool_results:
+      - calculator
+    forbidden:
+      - numeric_claim_without_tool
+    fallback:
+      verdict: insufficient_evidence
+      reason: Numeric conclusions require source facts and calculation results.
+
+  compliance_judgement:
+    required_evidence:
+      - type: regulation
+        min_count: 1
+      - type: source_fact
+        min_count: 1
+    forbidden:
+      - use_model_memory_as_authority
+      - unsupported_pass_fail
+    fallback:
+      verdict: need_check
+      reason: Compliance judgments require rule evidence and source facts.
+
+  citation_required_answer:
+    required_evidence:
+      - type: retrieved_context
+        min_count: 1
+    forbidden:
+      - answer_without_citation
+    fallback:
+      verdict: insufficient_evidence
+      reason: Answers must cite retrieved context.
+

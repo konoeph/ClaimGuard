@@ -1,0 +1,2 @@
+"""Dify adapter placeholder."""
+

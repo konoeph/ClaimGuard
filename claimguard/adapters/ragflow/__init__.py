@@ -1,0 +1,2 @@
+"""RAGFlow adapter placeholder."""
+

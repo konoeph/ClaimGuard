@@ -1,0 +1,2 @@
+"""DSPy adapter placeholder."""
+

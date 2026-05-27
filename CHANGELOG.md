@@ -2,6 +2,12 @@
 
 All notable changes to AgentClaimGuard will be documented in this file.
 
+## [Unreleased]
+
+### Maintenance
+
+- Restored the canonical Apache-2.0 license text for GitHub license detection.
+
 ## [0.3.0] - 2026-05-27
 
 ### Added

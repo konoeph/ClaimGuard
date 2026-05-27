@@ -8,7 +8,7 @@ from agentclaimguard.core.policy import Policy
 from agentclaimguard.core.result import VerificationResult
 from agentclaimguard.core.runtime import AgentClaimGuard
 
-from .types import FieldExtractor, FieldMapper, OutputMerger
+from .types import FieldExtractor, FieldMapper
 
 
 _DEFAULT_FIELD_MAP: dict[str, str] = {
@@ -26,6 +26,7 @@ class GuardedRunnable(RunnableSerializable[Any, Any]):
     field_map: FieldMapper = None
     result_key: str = "guard_result"
     output_key: str = "output"
+    overwrite_result: bool = False
 
     def invoke(self, input: Any, config=None, **kwargs: Any) -> Any:
         output = self.runnable.invoke(input, config=config, **kwargs)
@@ -59,6 +60,11 @@ class GuardedRunnable(RunnableSerializable[Any, Any]):
 
     def _merge_output(self, *, output: Any, guard_result: VerificationResult) -> Any:
         if isinstance(output, Mapping):
+            if self.result_key in output and not self.overwrite_result:
+                raise ValueError(
+                    f"LangChain adapter output already contains '{self.result_key}'. "
+                    "Use a different result_key or set overwrite_result=True."
+                )
             merged = dict(output)
             merged[self.result_key] = guard_result
             return merged
@@ -76,6 +82,7 @@ def create_guarded_runnable(
     field_map: FieldMapper = None,
     result_key: str = "guard_result",
     output_key: str = "output",
+    overwrite_result: bool = False,
 ) -> GuardedRunnable:
     """Wrap a LangChain Runnable and attach AgentClaimGuard verification."""
     return GuardedRunnable(
@@ -84,6 +91,7 @@ def create_guarded_runnable(
         field_map=field_map,
         result_key=result_key,
         output_key=output_key,
+        overwrite_result=overwrite_result,
     )
 
 

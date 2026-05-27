@@ -68,7 +68,10 @@ final_answer=Need calculator result before returning numeric conclusion.
 
 ```text
 $ python examples/langchain_guard/demo.py
-final_answer=Revenue increased by 15%.
-guard_status=blocked
-claim_status=tool_required
+sync_final_answer=Revenue increased by 15%.
+sync_guard_status=blocked
+sync_claim_status=tool_required
+async_final_answer=Revenue increased by 15%.
+async_guard_status=blocked
+async_claim_status=tool_required
 ```

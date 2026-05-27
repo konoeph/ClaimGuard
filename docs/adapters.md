@@ -151,6 +151,12 @@ guarded = create_guarded_runnable(
 )
 ```
 
+Async chains can use the same wrapper API:
+
+```python
+result = await guarded.ainvoke(input_data)
+```
+
 If the wrapped Runnable returns a mapping, the adapter appends `guard_result`
 under the configured `result_key`. If it returns a non-mapping value, the
 adapter wraps it into:
@@ -161,6 +167,10 @@ adapter wraps it into:
     "guard_result": verification_result,
 }
 ```
+
+If the wrapped Runnable already returns the configured `result_key`, the adapter
+raises `ValueError` by default. Use `overwrite_result=True` only when that
+replacement is intentional.
 
 Run the minimal demo:
 

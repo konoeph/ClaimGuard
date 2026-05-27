@@ -9,6 +9,7 @@ verification results to the Runnable output.
 - `create_guarded_runnable(...)` runs AgentClaimGuard after the Runnable
 - the original output is returned with `guard_result` attached
 - a numeric claim without a calculator result is blocked
+- both `invoke(...)` and `ainvoke(...)` paths
 
 ## Install
 
@@ -25,9 +26,12 @@ python examples/langchain_guard/demo.py
 ## Expected output
 
 ```text
-final_answer=Revenue increased by 15%.
-guard_status=blocked
-claim_status=tool_required
+sync_final_answer=Revenue increased by 15%.
+sync_guard_status=blocked
+sync_claim_status=tool_required
+async_final_answer=Revenue increased by 15%.
+async_guard_status=blocked
+async_claim_status=tool_required
 ```
 
 ## Custom field mapping
@@ -46,3 +50,13 @@ guarded = create_guarded_runnable(
     result_key="verification",
 )
 ```
+
+## Result key collisions
+
+If the wrapped Runnable already returns a `guard_result` field, the adapter
+raises `ValueError` by default instead of silently overwriting it.
+
+Use either:
+
+- a different `result_key`, or
+- `overwrite_result=True` if replacement is intentional

@@ -6,7 +6,6 @@ from .types import (
     FieldMapper,
     LangChainAdapterInput,
     LangChainAdapterOutput,
-    OutputMerger,
 )
 
 __all__ = [
@@ -15,6 +14,5 @@ __all__ = [
     "GuardedRunnable",
     "LangChainAdapterInput",
     "LangChainAdapterOutput",
-    "OutputMerger",
     "create_guarded_runnable",
 ]

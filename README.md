@@ -13,6 +13,9 @@ AgentClaimGuard does not decide whether a claim is true by itself. It verifies
 whether a claim is allowed to be returned under a user-defined evidence and tool
 policy.
 
+AgentClaimGuard is released under Apache-2.0 to support open-source, research,
+and commercial integration across LLM agent applications.
+
 No evidence, no claim.  
 No tool result, no numeric conclusion.  
 No source, no compliance judgment.
@@ -149,7 +152,11 @@ print(result["guard_result"].status)
 ```
 
 Use `field_map` when the Runnable output uses custom keys for claims, evidence,
-or tool results.
+or tool results. `ainvoke(...)` is also supported for async chains.
+
+By default, the wrapper raises `ValueError` if the Runnable output already
+contains the chosen `result_key`. Use a different `result_key`, or set
+`overwrite_result=True` when replacement is intentional.
 
 Run the minimal adapter demo:
 
@@ -188,3 +195,7 @@ AgentClaimGuard is not an agent framework, RAG engine, vector database, or
 general-purpose safety guardrail.
 
 It is a claim-level reliability layer for LLM applications.
+
+## License
+
+AgentClaimGuard is available under the [Apache-2.0 License](LICENSE).

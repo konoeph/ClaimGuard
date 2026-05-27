@@ -10,6 +10,11 @@ All notable changes to AgentClaimGuard will be documented in this file.
 - Added a LangChain adapter demo and tests.
 - Added LangChain adapter documentation and quickstart notes.
 
+### Changed
+
+- Clarified LangChain `ainvoke(...)` usage in the demo and docs.
+- Made LangChain adapter result-key collisions raise by default unless overwrite is enabled.
+
 ## [0.2.1] - 2026-05-27
 
 ### Added

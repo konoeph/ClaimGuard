@@ -1,3 +1,5 @@
+import asyncio
+
 from langchain_core.runnables import RunnableLambda
 
 from agentclaimguard import Policy
@@ -124,4 +126,122 @@ def test_guarded_runnable_wraps_non_mapping_output() -> None:
     )
 
     assert "claims_output" in result
+    assert result["guard_result"].status == "blocked"
+
+
+def test_guarded_runnable_ainvoke_blocks_missing_tool_result() -> None:
+    policy = Policy.load_builtin("generic_numeric")
+    runnable = RunnableLambda(
+        lambda payload: {
+            "final_answer": payload["question"],
+            "claims": payload["claims"],
+            "evidence": payload["evidence"],
+            "tool_results": payload["tool_results"],
+        }
+    )
+
+    guarded = create_guarded_runnable(runnable=runnable, policy=policy)
+    result = asyncio.run(
+        guarded.ainvoke(
+            {
+                "question": "Revenue increased by 15%.",
+                "claims": [
+                    {
+                        "id": "claim_1",
+                        "type": "numeric_conclusion",
+                        "text": "Revenue increased by 15%.",
+                        "evidence_refs": ["ev_1", "ev_2"],
+                    }
+                ],
+                "evidence": [
+                    {
+                        "id": "ev_1",
+                        "type": "source_fact",
+                        "content": "Revenue was 115.",
+                    },
+                    {
+                        "id": "ev_2",
+                        "type": "source_fact",
+                        "content": "Revenue was 100.",
+                    },
+                ],
+                "tool_results": [],
+            }
+        )
+    )
+
+    assert result["guard_result"].status == "blocked"
+    assert result["guard_result"].claim_results[0].status == "tool_required"
+
+
+def test_guarded_runnable_raises_on_result_key_collision_by_default() -> None:
+    policy = Policy.load_builtin("generic_numeric")
+    runnable = RunnableLambda(
+        lambda payload: {
+            "guard_result": "existing value",
+            "claims": payload["claims"],
+            "evidence": payload["evidence"],
+            "tool_results": payload["tool_results"],
+        }
+    )
+    guarded = create_guarded_runnable(runnable=runnable, policy=policy)
+
+    try:
+        guarded.invoke(
+            {
+                "claims": [
+                    {
+                        "id": "claim_1",
+                        "type": "numeric_conclusion",
+                        "text": "Revenue increased by 15%.",
+                        "evidence_refs": ["ev_1", "ev_2"],
+                    }
+                ],
+                "evidence": [
+                    {"id": "ev_1", "type": "source_fact", "content": "Revenue was 115."},
+                    {"id": "ev_2", "type": "source_fact", "content": "Revenue was 100."},
+                ],
+                "tool_results": [],
+            }
+        )
+    except ValueError as exc:
+        assert "already contains 'guard_result'" in str(exc)
+    else:
+        raise AssertionError("Expected ValueError for result_key collision.")
+
+
+def test_guarded_runnable_can_overwrite_result_key_when_enabled() -> None:
+    policy = Policy.load_builtin("generic_numeric")
+    runnable = RunnableLambda(
+        lambda payload: {
+            "guard_result": "existing value",
+            "claims": payload["claims"],
+            "evidence": payload["evidence"],
+            "tool_results": payload["tool_results"],
+        }
+    )
+    guarded = create_guarded_runnable(
+        runnable=runnable,
+        policy=policy,
+        overwrite_result=True,
+    )
+
+    result = guarded.invoke(
+        {
+            "claims": [
+                {
+                    "id": "claim_1",
+                    "type": "numeric_conclusion",
+                    "text": "Revenue increased by 15%.",
+                    "evidence_refs": ["ev_1", "ev_2"],
+                }
+            ],
+            "evidence": [
+                {"id": "ev_1", "type": "source_fact", "content": "Revenue was 115."},
+                {"id": "ev_2", "type": "source_fact", "content": "Revenue was 100."},
+            ],
+            "tool_results": [],
+        }
+    )
+
     assert result["guard_result"].status == "blocked"

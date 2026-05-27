@@ -52,6 +52,10 @@ $ python examples/rag_citation/demo.py
 
 ## LangGraph Guard
 
+The LangGraph demo runs through a real `StateGraph` when `langgraph` is
+installed. Without it, the example falls back to direct node invocation and
+prints the same routing outcome.
+
 ```text
 $ python examples/langgraph_guard/demo.py
 guard_status=blocked

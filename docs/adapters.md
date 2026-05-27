@@ -16,22 +16,35 @@ claims + evidence + tool_results + policy -> verify -> status + violations + saf
 The LangGraph adapter exposes a verification node and a routing helper:
 
 ```python
-from langgraph.graph import END, StateGraph
+from typing import Any, TypedDict
+
+from langgraph.graph import END, START, StateGraph
 from agentclaimguard import Policy
+from agentclaimguard.core.result import VerificationResult
 from agentclaimguard.adapters.langgraph import (
     create_evidence_guard_node,
     route_by_guard_status,
 )
 
+
+class GuardState(TypedDict, total=False):
+    claims: list[dict[str, Any]]
+    evidence: list[dict[str, Any]]
+    tool_results: list[dict[str, Any]]
+    guard_result: VerificationResult
+    final_answer: str
+
+
 policy = Policy.load_builtin("generic_numeric")
 guard_node = create_evidence_guard_node(policy=policy)
 
-builder = StateGraph(dict)
+builder = StateGraph(GuardState)
 builder.add_node("agent", agent_node)
 builder.add_node("guard", guard_node)
 builder.add_node("repair", repair_node)
 builder.add_node("human_review", human_review_node)
 
+builder.add_edge(START, "agent")
 builder.add_edge("agent", "guard")
 builder.add_conditional_edges(
     "guard",
@@ -44,6 +57,8 @@ builder.add_conditional_edges(
         "conflicting_evidence": "human_review",
     },
 )
+builder.add_edge("repair", END)
+builder.add_edge("human_review", END)
 ```
 
 The default state shape is intentionally plain:
@@ -70,12 +85,26 @@ insufficient_evidence
 conflicting_evidence
 ```
 
+The top-level `VerificationResult.status` stays `passed` or `blocked`. The
+router inspects the first non-passed claim result so graph branches can still
+distinguish `insufficient_evidence`, `conflicting_evidence`, and `need_check`.
+
+If your graph uses a different field name, pass the same custom key to both:
+
+```python
+guard_node = create_evidence_guard_node(policy=policy, result_key="verification")
+route = route_by_guard_status(state, result_key="verification")
+```
+
 Run the minimal demo:
 
 ```bash
-pip install -e ".[langgraph]"
+pip install -e ".[dev,server,langgraph]"
 python examples/langgraph_guard/demo.py
 ```
+
+If `langgraph` is not installed, the demo falls back to direct node invocation
+so you can still inspect the adapter behavior outside a graph runtime.
 
 ## Planned Adapters
 

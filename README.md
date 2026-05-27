@@ -61,22 +61,36 @@ print(result.status)
 ## LangGraph Adapter
 
 AgentClaimGuard can run as a LangGraph node between an agent step and routing
-logic:
+logic. Use a typed state schema so LangGraph keeps `guard_result` in the graph
+state:
 
 ```python
-from langgraph.graph import END, StateGraph
+from typing import Any, TypedDict
+
+from langgraph.graph import END, START, StateGraph
 from agentclaimguard import Policy
 from agentclaimguard.adapters.langgraph import (
     create_evidence_guard_node,
     route_by_guard_status,
 )
 
+
+class GuardState(TypedDict, total=False):
+    claims: list[dict[str, Any]]
+    evidence: list[dict[str, Any]]
+    tool_results: list[dict[str, Any]]
+    guard_result: object
+
+
 policy = Policy.load_builtin("generic_numeric")
 guard_node = create_evidence_guard_node(policy=policy)
 
-builder = StateGraph(dict)
+builder = StateGraph(GuardState)
 builder.add_node("agent", agent_node)
 builder.add_node("guard", guard_node)
+builder.add_node("repair", repair_node)
+builder.add_node("human_review", human_review_node)
+builder.add_edge(START, "agent")
 builder.add_edge("agent", "guard")
 builder.add_conditional_edges(
     "guard",
@@ -89,13 +103,23 @@ builder.add_conditional_edges(
         "conflicting_evidence": "human_review",
     },
 )
+builder.add_edge("repair", END)
+builder.add_edge("human_review", END)
 ```
 
-Run the minimal adapter demo:
+If your graph uses a different state field, pass the same `result_key` to both
+`create_evidence_guard_node(...)` and `route_by_guard_status(...)`.
+
+Run the minimal adapter demo. If `langgraph` is not installed, the demo falls
+back to direct node invocation and prints the same guard decision:
 
 ```bash
+pip install -e ".[langgraph]"
 python examples/langgraph_guard/demo.py
 ```
+
+See [examples/langgraph_guard/README.md](examples/langgraph_guard/README.md) for
+the full walkthrough.
 
 ## Example Outputs
 

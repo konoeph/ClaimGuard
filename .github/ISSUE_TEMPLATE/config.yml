@@ -3,4 +3,9 @@ contact_links:
   - name: Roadmap
     url: https://github.com/konoeph/AgentClaimGuard/blob/main/docs/roadmap.md
     about: Read the current release and future roadmap before opening a new issue.
-
+  - name: Adapter docs
+    url: https://github.com/konoeph/AgentClaimGuard/blob/main/docs/adapters.md
+    about: Review the current adapter patterns before requesting a new integration.
+  - name: Example outputs
+    url: https://github.com/konoeph/AgentClaimGuard/blob/main/docs/examples.md
+    about: Check the bundled demos and expected outputs before reporting a behavior mismatch.

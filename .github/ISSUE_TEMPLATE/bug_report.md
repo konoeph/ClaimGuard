@@ -9,6 +9,10 @@ labels: bug
 
 ## Reproduction Steps
 
+## Minimal Claim / Evidence / Tool Sample
+
+## Active Policy
+
 ## Expected Behavior
 
 ## Actual Behavior
@@ -18,4 +22,4 @@ labels: bug
 - OS:
 - Python:
 - AgentClaimGuard version:
-
+- Integration (if any):

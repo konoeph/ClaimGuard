@@ -1,3 +1,10 @@
+"""Minimal LangGraph adapter demo for AgentClaimGuard.
+
+The script prefers a real LangGraph execution when `langgraph` is installed and
+falls back to direct node invocation otherwise. Both paths produce the same
+guard decision so the demo stays runnable in lightweight environments.
+"""
+
 from typing import Any, TypedDict
 
 from agentclaimguard import Policy
@@ -53,9 +60,9 @@ def run_without_langgraph() -> None:
     route = route_by_guard_status(state)
 
     if route == "blocked":
-        state = repair_node(state)
+        state.update(repair_node(state))
     elif route in {"need_check", "insufficient_evidence", "conflicting_evidence"}:
-        state = human_review_node(state)
+        state.update(human_review_node(state))
 
     result = state["guard_result"]
     print(f"guard_status={result.status}")

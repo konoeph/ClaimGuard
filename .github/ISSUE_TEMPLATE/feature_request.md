@@ -9,7 +9,8 @@ labels: enhancement
 
 ## Proposed Solution
 
+## Target Integration or Workflow
+
 ## Why It Belongs in AgentClaimGuard
 
 ## Notes
-

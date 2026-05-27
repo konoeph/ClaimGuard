@@ -31,6 +31,9 @@ See [examples.md](examples.md) for the expected outputs from all three demos.
 Run the LangGraph adapter demo:
 
 ```bash
-pip install -e ".[langgraph]"
+pip install -e ".[dev,server,langgraph]"
 python examples/langgraph_guard/demo.py
 ```
+
+See [../examples/langgraph_guard/README.md](../examples/langgraph_guard/README.md)
+for the state shape, routing behavior, and expected output.

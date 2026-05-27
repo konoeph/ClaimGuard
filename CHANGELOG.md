@@ -4,6 +4,17 @@ All notable changes to AgentClaimGuard will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+- Added a pull request template for release-oriented validation.
+- Added clearer LangGraph demo notes under `examples/langgraph_guard/`.
+
+### Changed
+
+- Clarified README and adapter docs around LangGraph typed state usage.
+- Clarified custom `result_key` usage for the LangGraph adapter helpers.
+- Improved issue templates for integration-specific bug reports and feature requests.
+
 ### Maintenance
 
 - Updated GitHub Actions workflow dependencies to Node 24 compatible versions.

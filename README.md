@@ -200,4 +200,6 @@ It is a claim-level reliability layer for LLM applications.
 
 ## License
 
+Copyright 2026 Hao Peng (彭浩).
+
 AgentClaimGuard is available under the [Apache-2.0 License](LICENSE).

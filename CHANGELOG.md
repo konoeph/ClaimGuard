@@ -7,6 +7,7 @@ All notable changes to AgentClaimGuard will be documented in this file.
 ### Maintenance
 
 - Restored the canonical Apache-2.0 license text for GitHub license detection.
+- Added explicit copyright ownership for Hao Peng in project metadata.
 
 ## [0.3.0] - 2026-05-27
 

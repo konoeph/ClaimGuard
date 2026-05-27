@@ -2,6 +2,12 @@
 
 All notable changes to AgentClaimGuard will be documented in this file.
 
+## [Unreleased]
+
+### Maintenance
+
+- Updated GitHub Actions workflow dependencies to Node 24 compatible versions.
+
 ## [0.2.0] - 2026-05-27
 
 ### Added

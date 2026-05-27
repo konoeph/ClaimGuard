@@ -17,3 +17,17 @@ Use this checklist before publishing an AgentClaimGuard release.
 - [ ] Confirm GitHub Actions is green
 - [ ] Create an annotated tag
 - [ ] Publish the GitHub Release
+- [ ] Publish to PyPI, preferably through the `Publish to PyPI` GitHub Actions workflow
+
+## PyPI Trusted Publishing
+
+Configure the PyPI project trusted publisher before using the publishing
+workflow:
+
+- Owner: `konoeph`
+- Repository: `AgentClaimGuard`
+- Workflow name: `publish.yml`
+- Environment: `pypi`
+
+After a release tag and GitHub Release are ready, run the `Publish to PyPI`
+workflow manually and enter the release tag as the `ref` input.

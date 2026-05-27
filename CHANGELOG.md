@@ -8,6 +8,11 @@ All notable changes to AgentClaimGuard will be documented in this file.
 
 - Updated README installation and quickstart commands to use the published PyPI package.
 
+### Maintenance
+
+- Added a manual GitHub Actions workflow for PyPI Trusted Publishing.
+- Documented PyPI trusted publisher setup in the release checklist.
+
 ## [0.3.1] - 2026-05-27
 
 ### Maintenance

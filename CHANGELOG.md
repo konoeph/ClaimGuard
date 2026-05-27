@@ -2,6 +2,12 @@
 
 All notable changes to AgentClaimGuard will be documented in this file.
 
+## [Unreleased]
+
+### Changed
+
+- Updated README installation and quickstart commands to use the published PyPI package.
+
 ## [0.3.1] - 2026-05-27
 
 ### Maintenance

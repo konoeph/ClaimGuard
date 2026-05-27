@@ -34,7 +34,7 @@ returned to users.
 
 ## Install
 
-From PyPI, after the package is published:
+Install from PyPI:
 
 ```bash
 pip install agentclaimguard
@@ -57,9 +57,7 @@ pip install -e ".[dev,server,langgraph,langchain]"
 ## Quickstart
 
 ```bash
-pip install -e ".[dev,server]"
-python examples/numeric_conclusion/demo.py
-uvicorn agentclaimguard.server.main:app --reload
+pip install agentclaimguard
 ```
 
 ```python
@@ -69,6 +67,20 @@ guard = AgentClaimGuard(Policy.load_builtin("generic_strict"))
 result = guard.verify(claims=[], evidence=[], tool_results=[])
 
 print(result.status)
+```
+
+To run the FastAPI server:
+
+```bash
+pip install "agentclaimguard[server]"
+uvicorn agentclaimguard.server.main:app --reload
+```
+
+To run the repository demos from a local clone:
+
+```bash
+pip install -e ".[dev,server,langgraph,langchain]"
+python examples/numeric_conclusion/demo.py
 ```
 
 ## LangGraph Adapter

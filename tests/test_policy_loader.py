@@ -12,3 +12,9 @@ def test_policy_loader_loads_generic_policy() -> None:
     assert numeric_policy.required_evidence[0].type == "source_fact"
     assert numeric_policy.required_tool_results[0].tool_name == "calculator"
 
+
+def test_policy_loader_loads_builtin_policy() -> None:
+    policy = Policy.load_builtin("generic_numeric")
+
+    assert policy.name == "generic_numeric"
+    assert "numeric_conclusion" in policy.claim_types

@@ -2,6 +2,30 @@
 
 All notable changes to AgentClaimGuard will be documented in this file.
 
+## [0.2.0] - 2026-05-27
+
+### Added
+
+- LangGraph evidence guard node adapter.
+- Guard status routing helper for LangGraph conditional edges.
+- Built-in policy loader helper.
+- Minimal LangGraph adapter demo.
+- Adapter tests for passed, blocked, and routed guard results.
+
+## [0.1.1] - 2026-05-27
+
+### Added
+
+- README badges.
+- Example output documentation.
+- Roadmap documentation.
+- Adapter planning documentation.
+- GitHub issue templates.
+
+### Changed
+
+- Improved README quickstart and project positioning.
+
 ## [0.1.0] - 2026-05-27
 
 ### Added
@@ -31,4 +55,3 @@ All notable changes to AgentClaimGuard will be documented in this file.
   - RAG citation
 - Initial documentation and Apache-2.0 license.
 - Pytest test suite.
-

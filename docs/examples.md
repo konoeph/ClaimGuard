@@ -50,3 +50,12 @@ $ python examples/rag_citation/demo.py
 }
 ```
 
+## LangGraph Guard
+
+```text
+$ python examples/langgraph_guard/demo.py
+guard_status=blocked
+claim_status=tool_required
+route=blocked
+final_answer=Need calculator result before returning numeric conclusion.
+```

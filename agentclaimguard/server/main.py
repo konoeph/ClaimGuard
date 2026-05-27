@@ -12,7 +12,7 @@ DEFAULT_POLICY_PATH = (
 
 app = FastAPI(
     title="AgentClaimGuard",
-    version="0.1.0",
+    version="0.2.0",
     description="A framework-agnostic evidence gate for LLM agent claims.",
 )
 
@@ -42,4 +42,3 @@ def repair(request: RepairRequest):
         evidence=request.evidence,
         tool_results=request.tool_results,
     )
-

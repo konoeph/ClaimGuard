@@ -35,6 +35,12 @@ returned to users.
 pip install -e ".[dev,server]"
 ```
 
+For the LangGraph adapter example:
+
+```bash
+pip install -e ".[dev,server,langgraph]"
+```
+
 ## Quickstart
 
 ```bash
@@ -46,12 +52,49 @@ uvicorn agentclaimguard.server.main:app --reload
 ```python
 from agentclaimguard import AgentClaimGuard, Policy
 
-guard = AgentClaimGuard(
-    Policy.load("agentclaimguard/policies/generic_strict.yaml")
-)
+guard = AgentClaimGuard(Policy.load_builtin("generic_strict"))
 result = guard.verify(claims=[], evidence=[], tool_results=[])
 
 print(result.status)
+```
+
+## LangGraph Adapter
+
+AgentClaimGuard can run as a LangGraph node between an agent step and routing
+logic:
+
+```python
+from langgraph.graph import END, StateGraph
+from agentclaimguard import Policy
+from agentclaimguard.adapters.langgraph import (
+    create_evidence_guard_node,
+    route_by_guard_status,
+)
+
+policy = Policy.load_builtin("generic_numeric")
+guard_node = create_evidence_guard_node(policy=policy)
+
+builder = StateGraph(dict)
+builder.add_node("agent", agent_node)
+builder.add_node("guard", guard_node)
+builder.add_edge("agent", "guard")
+builder.add_conditional_edges(
+    "guard",
+    route_by_guard_status,
+    {
+        "passed": END,
+        "blocked": "repair",
+        "need_check": "human_review",
+        "insufficient_evidence": "human_review",
+        "conflicting_evidence": "human_review",
+    },
+)
+```
+
+Run the minimal adapter demo:
+
+```bash
+python examples/langgraph_guard/demo.py
 ```
 
 ## Example Outputs

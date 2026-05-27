@@ -55,10 +55,29 @@ class Policy(BaseModel):
         data = load_yaml(path)
         return cls.model_validate(data)
 
+    @classmethod
+    def load_builtin(cls, name: str) -> "Policy":
+        policy_name = name.removesuffix(".yaml")
+        if "/" in policy_name or "\\" in policy_name:
+            raise ValueError("Built-in policy names must not include path separators.")
+
+        path = Path(__file__).resolve().parents[1] / "policies" / f"{policy_name}.yaml"
+        if not path.exists():
+            available = ", ".join(cls.list_builtin())
+            raise ValueError(
+                f"Unknown built-in policy '{name}'. Available policies: {available}."
+            )
+
+        return cls.load(path)
+
+    @classmethod
+    def list_builtin(cls) -> list[str]:
+        policy_dir = Path(__file__).resolve().parents[1] / "policies"
+        return sorted(path.stem for path in policy_dir.glob("*.yaml"))
+
     def policy_for_claim_type(self, claim_type: str) -> ClaimTypePolicy:
         return self.claim_types.get(claim_type, ClaimTypePolicy())
 
     def fallback_for_claim_type(self, claim_type: str) -> FallbackRule:
         claim_policy = self.policy_for_claim_type(claim_type)
         return claim_policy.fallback or self.default_fallback
-

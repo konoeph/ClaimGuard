@@ -27,3 +27,10 @@ curl -X POST http://127.0.0.1:8000/v1/verify \
 ```
 
 See [examples.md](examples.md) for the expected outputs from all three demos.
+
+Run the LangGraph adapter demo:
+
+```bash
+pip install -e ".[langgraph]"
+python examples/langgraph_guard/demo.py
+```

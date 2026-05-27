@@ -8,10 +8,15 @@
 - issue templates
 - adapter docs cleanup
 
-## v0.2.0 Framework Adapters
+## v0.2.0 LangGraph Adapter
+
+- LangGraph node
+- route helper for guard status branching
+- minimal LangGraph example
+
+## v0.2.x Framework Adapter Polish
 
 - LangChain middleware / Runnable wrapper
-- LangGraph node
 - more integration examples
 
 ## v0.3.0 Claim Extraction / OpenAPI Examples

@@ -4,6 +4,8 @@ All notable changes to AgentClaimGuard will be documented in this file.
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-05-27
+
 ### Added
 
 - Added a pull request template for release-oriented validation.

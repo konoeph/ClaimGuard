@@ -12,7 +12,7 @@ DEFAULT_POLICY_PATH = (
 
 app = FastAPI(
     title="AgentClaimGuard",
-    version="0.2.0",
+    version="0.2.1",
     description="A framework-agnostic evidence gate for LLM agent claims.",
 )
 

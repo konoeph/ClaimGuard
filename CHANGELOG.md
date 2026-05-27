@@ -8,6 +8,8 @@ All notable changes to AgentClaimGuard will be documented in this file.
 
 - Added a pull request template for release-oriented validation.
 - Added clearer LangGraph demo notes under `examples/langgraph_guard/`.
+- Added troubleshooting notes for common LangGraph adapter issues.
+- Added a release checklist for maintainers.
 
 ### Changed
 

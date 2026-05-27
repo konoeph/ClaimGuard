@@ -142,6 +142,8 @@ Claim -> Evidence -> Tool -> Verify
 - Open issues: [GitHub Issues](https://github.com/konoeph/AgentClaimGuard/issues)
 - Roadmap: [docs/roadmap.md](docs/roadmap.md)
 - Adapter plan: [docs/adapters.md](docs/adapters.md)
+- Troubleshooting: [docs/troubleshooting.md](docs/troubleshooting.md)
+- Release checklist: [docs/release_checklist.md](docs/release_checklist.md)
 
 ## What AgentClaimGuard Is Not
 

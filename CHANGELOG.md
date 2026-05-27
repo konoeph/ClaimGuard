@@ -2,15 +2,15 @@
 
 All notable changes to AgentClaimGuard will be documented in this file.
 
-## [Unreleased]
-
-### Changed
-
-- Updated README installation and quickstart commands to use the published PyPI package.
+## [0.3.2] - 2026-05-27
 
 ### Added
 
 - Added a Dify HTTP tool integration example using the existing FastAPI `/v1/verify` endpoint.
+
+### Changed
+
+- Updated README installation and quickstart commands to use the published PyPI package.
 
 ### Maintenance
 

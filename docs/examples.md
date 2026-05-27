@@ -63,3 +63,12 @@ claim_status=tool_required
 route=blocked
 final_answer=Need calculator result before returning numeric conclusion.
 ```
+
+## LangChain Guard
+
+```text
+$ python examples/langchain_guard/demo.py
+final_answer=Revenue increased by 15%.
+guard_status=blocked
+claim_status=tool_required
+```

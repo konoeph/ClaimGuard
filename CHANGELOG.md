@@ -4,6 +4,12 @@ All notable changes to AgentClaimGuard will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+- Added a LangChain Runnable wrapper adapter.
+- Added a LangChain adapter demo and tests.
+- Added LangChain adapter documentation and quickstart notes.
+
 ## [0.2.1] - 2026-05-27
 
 ### Added

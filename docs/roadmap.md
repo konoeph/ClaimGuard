@@ -14,9 +14,15 @@
 - route helper for guard status branching
 - minimal LangGraph example
 
-## v0.2.x Framework Adapter Polish
+## v0.3.0 LangChain Adapter
 
-- LangChain middleware / Runnable wrapper
+- LangChain Runnable wrapper
+- field mapping for claims, evidence, and tool results
+- minimal LangChain example
+
+## v0.3.x Adapter Expansion
+
+- LangChain middleware hook
 - more integration examples
 
 ## v0.3.0 Claim Extraction / OpenAPI Examples

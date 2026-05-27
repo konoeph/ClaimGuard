@@ -37,3 +37,10 @@ python examples/langgraph_guard/demo.py
 
 See [../examples/langgraph_guard/README.md](../examples/langgraph_guard/README.md)
 for the state shape, routing behavior, and expected output.
+
+Run the LangChain adapter demo:
+
+```bash
+pip install -e ".[dev,server,langchain]"
+python examples/langchain_guard/demo.py
+```

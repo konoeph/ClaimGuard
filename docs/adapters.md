@@ -106,11 +106,73 @@ python examples/langgraph_guard/demo.py
 If `langgraph` is not installed, the demo falls back to direct node invocation
 so you can still inspect the adapter behavior outside a graph runtime.
 
+## LangChain
+
+The LangChain adapter currently focuses on a Runnable wrapper that runs
+AgentClaimGuard after the wrapped Runnable completes.
+
+```python
+from langchain_core.runnables import RunnableLambda
+
+from agentclaimguard import Policy
+from agentclaimguard.adapters.langchain import create_guarded_runnable
+
+chain = RunnableLambda(lambda payload: {
+    "final_answer": payload["question"],
+    "claims": payload["claims"],
+    "evidence": payload["evidence"],
+    "tool_results": payload["tool_results"],
+})
+
+guarded = create_guarded_runnable(
+    runnable=chain,
+    policy=Policy.load_builtin("generic_numeric"),
+)
+
+result = guarded.invoke(input_data)
+```
+
+The wrapped Runnable should expose structured `claims`, `evidence`, and
+`tool_results` in its output or input payload. By default, the adapter looks for
+those field names in the Runnable output first, then in the original input.
+
+When your chain uses different keys, provide a `field_map`:
+
+```python
+guarded = create_guarded_runnable(
+    runnable=chain,
+    policy=policy,
+    field_map={
+        "claims": "structured_claims",
+        "evidence": "supporting_evidence",
+        "tool_results": "calculator_runs",
+    },
+    result_key="verification",
+)
+```
+
+If the wrapped Runnable returns a mapping, the adapter appends `guard_result`
+under the configured `result_key`. If it returns a non-mapping value, the
+adapter wraps it into:
+
+```python
+{
+    "output": original_output,
+    "guard_result": verification_result,
+}
+```
+
+Run the minimal demo:
+
+```bash
+pip install -e ".[dev,server,langchain]"
+python examples/langchain_guard/demo.py
+```
+
 ## Planned Adapters
 
-- LangChain middleware or Runnable wrapper
-  - Wrap the verifier after output parsing.
-  - Use it as a post-check or repair step in an existing chain.
+- LangChain middleware hook
+  - Add a deeper integration path after the Runnable wrapper API settles.
 - DSPy module wrapper
   - Expose policy-backed assertions as reusable pipeline checks.
 - Dify tool plugin

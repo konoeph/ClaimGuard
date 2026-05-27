@@ -35,10 +35,10 @@ returned to users.
 pip install -e ".[dev,server]"
 ```
 
-For the LangGraph adapter example:
+For the framework adapter examples:
 
 ```bash
-pip install -e ".[dev,server,langgraph]"
+pip install -e ".[dev,server,langgraph,langchain]"
 ```
 
 ## Quickstart
@@ -121,6 +121,42 @@ python examples/langgraph_guard/demo.py
 See [examples/langgraph_guard/README.md](examples/langgraph_guard/README.md) for
 the full walkthrough.
 
+## LangChain Adapter
+
+AgentClaimGuard can also wrap a LangChain Runnable and attach verification to
+its output:
+
+```python
+from langchain_core.runnables import RunnableLambda
+
+from agentclaimguard import Policy
+from agentclaimguard.adapters.langchain import create_guarded_runnable
+
+chain = RunnableLambda(lambda payload: {
+    "final_answer": payload["question"],
+    "claims": payload["claims"],
+    "evidence": payload["evidence"],
+    "tool_results": payload["tool_results"],
+})
+
+guarded = create_guarded_runnable(
+    runnable=chain,
+    policy=Policy.load_builtin("generic_numeric"),
+)
+
+result = guarded.invoke(input_data)
+print(result["guard_result"].status)
+```
+
+Use `field_map` when the Runnable output uses custom keys for claims, evidence,
+or tool results.
+
+Run the minimal adapter demo:
+
+```bash
+python examples/langchain_guard/demo.py
+```
+
 ## Example Outputs
 
 See [docs/examples.md](docs/examples.md) for full sample output. Short version:
@@ -142,6 +178,7 @@ Claim -> Evidence -> Tool -> Verify
 - Open issues: [GitHub Issues](https://github.com/konoeph/AgentClaimGuard/issues)
 - Roadmap: [docs/roadmap.md](docs/roadmap.md)
 - Adapter plan: [docs/adapters.md](docs/adapters.md)
+- LangChain demo: [examples/langchain_guard/demo.py](examples/langchain_guard/demo.py)
 - Troubleshooting: [docs/troubleshooting.md](docs/troubleshooting.md)
 - Release checklist: [docs/release_checklist.md](docs/release_checklist.md)
 

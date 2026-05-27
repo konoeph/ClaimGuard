@@ -2,7 +2,7 @@
 
 All notable changes to AgentClaimGuard will be documented in this file.
 
-## [Unreleased]
+## [0.3.0] - 2026-05-27
 
 ### Added
 

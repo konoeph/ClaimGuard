@@ -4,6 +4,12 @@
 [![Release](https://img.shields.io/github/v/release/konoeph/AgentClaimGuard)](https://github.com/konoeph/AgentClaimGuard/releases/latest)
 [![License](https://img.shields.io/github/license/konoeph/AgentClaimGuard)](./LICENSE)
 
+Install from PyPI:
+
+```bash
+pip install agentclaimguard
+```
+
 AgentClaimGuard is a framework-agnostic evidence gate for LLM agent claims.
 
 It verifies whether important claims in LLM outputs are supported by evidence,

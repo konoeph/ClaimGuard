@@ -4,6 +4,11 @@ All notable changes to AgentClaimGuard will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+- Added optional deterministic claim extraction helpers.
+- Added a claim extraction template and extraction-to-verification demo.
+
 ### Changed
 
 - Added a top-level PyPI install note to the README.

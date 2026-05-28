@@ -96,3 +96,20 @@ $ curl -X POST http://localhost:8000/v1/verify \
   ]
 }
 ```
+
+## Claim Extraction Helper
+
+The claim extraction helper converts user-provided claim-like items into
+structured `Claim` objects before verification.
+
+```text
+$ python examples/claim_extraction/demo.py
+extracted_claims=1
+skipped_items=1
+guard_status=blocked
+claim_status=tool_required
+safe_verdict=insufficient_evidence
+```
+
+Extraction is not verification. The helper does not call an LLM and does not
+decide whether claims are true.

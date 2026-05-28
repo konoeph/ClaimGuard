@@ -237,6 +237,41 @@ curl -X POST http://localhost:8000/v1/verify \
 See [examples/dify_http_tool/README.md](examples/dify_http_tool/README.md) for
 the Dify HTTP tool setup notes.
 
+## Claim Extraction Helper
+
+AgentClaimGuard also includes optional deterministic helpers for turning
+claim-like items into structured `Claim` objects:
+
+```python
+from agentclaimguard.extractors import (
+    ClaimExtractionTemplate,
+    create_claims_from_items,
+)
+
+template = ClaimExtractionTemplate.default()
+prompt = template.format(
+    answer="Revenue increased by 15%.",
+    claim_types=["numeric_conclusion"],
+)
+
+extraction = create_claims_from_items([
+    {
+        "text": "Revenue increased by 15%.",
+        "claim_type": "numeric_conclusion",
+        "evidence_refs": ["ev_1", "ev_2"],
+    }
+])
+```
+
+The helper does not call an LLM and does not verify truth.
+
+```text
+Extraction != Verification
+```
+
+See [examples/claim_extraction/README.md](examples/claim_extraction/README.md)
+for a minimal extraction-to-verification demo.
+
 ## Example Outputs
 
 See [docs/examples.md](docs/examples.md) for full sample output. Short version:
@@ -259,6 +294,7 @@ Claim -> Evidence -> Tool -> Verify
 - Roadmap: [docs/roadmap.md](docs/roadmap.md)
 - Adapter plan: [docs/adapters.md](docs/adapters.md)
 - LangChain demo: [examples/langchain_guard/demo.py](examples/langchain_guard/demo.py)
+- Claim extraction demo: [examples/claim_extraction/demo.py](examples/claim_extraction/demo.py)
 - Dify HTTP tool example: [examples/dify_http_tool/README.md](examples/dify_http_tool/README.md)
 - Troubleshooting: [docs/troubleshooting.md](docs/troubleshooting.md)
 - Release checklist: [docs/release_checklist.md](docs/release_checklist.md)

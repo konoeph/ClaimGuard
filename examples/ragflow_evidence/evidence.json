@@ -1,0 +1,30 @@
+[
+  {
+    "id": "ev_chunk_1",
+    "type": "source_fact",
+    "source": "Finance Report 2026 Q1",
+    "locator": "finance_report_2026_q1#chunk_1",
+    "content": "Revenue was 115 million USD in Q1 2026.",
+    "metadata": {
+      "provider": "ragflow",
+      "chunk_id": "chunk_1",
+      "document_id": "finance_report_2026_q1",
+      "score": 0.91,
+      "page": 4
+    }
+  },
+  {
+    "id": "ev_chunk_2",
+    "type": "source_fact",
+    "source": "Finance Report 2025 Q1",
+    "locator": "finance_report_2025_q1#chunk_2",
+    "content": "Revenue was 100 million USD in Q1 2025.",
+    "metadata": {
+      "provider": "ragflow",
+      "chunk_id": "chunk_2",
+      "document_id": "finance_report_2025_q1",
+      "score": 0.88,
+      "page": 3
+    }
+  }
+]

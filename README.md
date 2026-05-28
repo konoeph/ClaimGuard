@@ -272,6 +272,22 @@ Extraction != Verification
 See [examples/claim_extraction/README.md](examples/claim_extraction/README.md)
 for a minimal extraction-to-verification demo.
 
+## RAGFlow Evidence Provider
+
+RAGFlow-style retrieved chunks can be mapped into AgentClaimGuard `Evidence`
+records before verification:
+
+```text
+RAGFlow / RAG system retrieves chunks
+        -> map chunks to Evidence
+        -> AgentClaimGuard.verify(...)
+```
+
+This is a mapping pattern, not a RAGFlow plugin or retrieval engine.
+
+See [examples/ragflow_evidence/README.md](examples/ragflow_evidence/README.md)
+for a copyable chunk-to-evidence example.
+
 ## Example Outputs
 
 See [docs/examples.md](docs/examples.md) for full sample output. Short version:
@@ -296,6 +312,7 @@ Claim -> Evidence -> Tool -> Verify
 - LangChain demo: [examples/langchain_guard/demo.py](examples/langchain_guard/demo.py)
 - Claim extraction demo: [examples/claim_extraction/demo.py](examples/claim_extraction/demo.py)
 - Dify HTTP tool example: [examples/dify_http_tool/README.md](examples/dify_http_tool/README.md)
+- RAGFlow evidence example: [examples/ragflow_evidence/README.md](examples/ragflow_evidence/README.md)
 - Troubleshooting: [docs/troubleshooting.md](docs/troubleshooting.md)
 - Release checklist: [docs/release_checklist.md](docs/release_checklist.md)
 

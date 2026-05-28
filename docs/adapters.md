@@ -236,6 +236,32 @@ blocked -> repair, retrieve more evidence, or human review
 This is not a full Dify plugin package. It is a minimal HTTP tool integration
 example that reuses the server API.
 
+## RAGFlow Evidence Provider
+
+The RAGFlow integration path maps retrieved chunks into AgentClaimGuard
+`Evidence` records. This keeps retrieval in the RAG system and verification in
+AgentClaimGuard:
+
+```text
+RAGFlow / RAG system retrieves chunks
+        -> map chunks to Evidence
+        -> AgentClaimGuard.verify(...)
+```
+
+A retrieved chunk can become an evidence record by preserving:
+
+- the chunk text as `content`
+- the source document name as `source`
+- the document/chunk pointer as `locator`
+- retrieval metadata such as chunk ID, document ID, score, and page in
+  `metadata`
+
+See `examples/ragflow_evidence/` for a copyable mapping example.
+
+This is not a RAGFlow plugin, vector search implementation, or ranking layer.
+It is an evidence-provider pattern for workflows that already have retrieved
+chunks.
+
 ## Planned Adapters
 
 - LangChain middleware hook
@@ -244,8 +270,9 @@ example that reuses the server API.
   - Expose policy-backed assertions as reusable pipeline checks.
 - Dify plugin package
   - Extend the HTTP tool pattern into a packaged integration if there is demand.
-- RAGFlow post-verifier
-  - Convert retrieved context into evidence records, then verify the final answer.
+- RAGFlow plugin package
+  - Extend the evidence-provider pattern into a packaged integration if there is
+    demand.
 
 ## Design Goal
 

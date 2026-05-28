@@ -117,3 +117,22 @@ decide whether claims are true.
 Invalid claim-like items are collected in `skipped_items` with corresponding
 `warnings`, so users can inspect extraction failures without stopping an entire
 batch.
+
+## RAGFlow Evidence Provider
+
+The RAGFlow evidence provider example maps retrieved chunks into
+AgentClaimGuard `Evidence` records before verification.
+
+```text
+$ python examples/ragflow_evidence/demo.py
+retrieved_chunks=2
+mapped_evidence=2
+first_locator=finance_report_2026_q1#chunk_1
+guard_status=blocked
+claim_status=tool_required
+safe_verdict=insufficient_evidence
+```
+
+This is a mapping example, not a RAGFlow plugin. Retrieval and ranking stay in
+the RAG system; AgentClaimGuard verifies structured claims against evidence,
+tool results, and policy.

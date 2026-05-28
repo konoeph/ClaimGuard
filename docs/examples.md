@@ -2,6 +2,18 @@
 
 These are the expected high-level outcomes from the bundled demos.
 
+## Integration Pattern Map
+
+Use the examples by integration pattern:
+
+```text
+HTTP tool          examples/dify_http_tool
+Evidence provider examples/ragflow_evidence
+Framework adapter examples/langgraph_guard, examples/langchain_guard
+Claim preparation examples/claim_extraction
+Core runtime       examples/numeric_conclusion, examples/rag_citation
+```
+
 ## Numeric Conclusion
 
 ```text

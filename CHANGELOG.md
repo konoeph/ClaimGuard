@@ -8,6 +8,8 @@ All notable changes to AgentClaimGuard will be documented in this file.
 
 - Added a RAGFlow-style evidence provider example that maps retrieved chunks
   into AgentClaimGuard `Evidence` records.
+- Added platform integration pattern documentation for HTTP tools, evidence
+  providers, and framework adapters.
 
 ## [0.4.0] - 2026-05-28
 

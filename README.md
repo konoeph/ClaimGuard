@@ -288,6 +288,18 @@ This is a mapping pattern, not a RAGFlow plugin or retrieval engine.
 See [examples/ragflow_evidence/README.md](examples/ragflow_evidence/README.md)
 for a copyable chunk-to-evidence example.
 
+## Integration Patterns
+
+AgentClaimGuard can be embedded in three common ways:
+
+```text
+HTTP tool          Dify / workflow platform -> POST /v1/verify
+Evidence provider RAGFlow / RAG system -> Evidence[]
+Framework adapter LangGraph node / LangChain Runnable -> guard_result
+```
+
+See [docs/adapters.md](docs/adapters.md) for when to use each pattern.
+
 ## Example Outputs
 
 See [docs/examples.md](docs/examples.md) for full sample output. Short version:

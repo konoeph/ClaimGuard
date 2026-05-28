@@ -11,6 +11,55 @@ Every adapter follows the same core runtime contract:
 claims + evidence + tool_results + policy -> verify -> status + violations + safe fallback
 ```
 
+## Platform Integration Patterns
+
+Most AgentClaimGuard integrations fit one of three patterns.
+
+### HTTP Tool Pattern
+
+Use this when a workflow platform can call an HTTP endpoint.
+
+```text
+Dify / workflow platform -> POST /v1/verify -> guard decision
+```
+
+The platform prepares structured `claims`, `evidence`, and `tool_results`.
+AgentClaimGuard receives them through the FastAPI server and returns a
+verification result.
+
+Use this pattern for Dify-style tools, no-code workflow builders, and services
+that can make JSON HTTP requests.
+
+### Evidence Provider Pattern
+
+Use this when a RAG system already retrieves context chunks.
+
+```text
+RAGFlow / RAG system -> Evidence[] -> AgentClaimGuard.verify(...)
+```
+
+The RAG system stays responsible for retrieval and ranking. The integration
+maps retrieved chunks into AgentClaimGuard `Evidence` records with stable IDs,
+source labels, locators, and retrieval metadata.
+
+Use this pattern for RAGFlow-style systems, custom retrievers, and document
+pipelines that already produce source chunks.
+
+### Framework Adapter Pattern
+
+Use this when claims should be verified inside an application framework.
+
+```text
+LangGraph node / LangChain Runnable -> guard_result -> route or return
+```
+
+The framework adapter reads structured claims, evidence, and tool results from
+state or Runnable payloads, runs AgentClaimGuard, then writes the verification
+result back for routing, repair, retrieval, or human review.
+
+Use this pattern for LangGraph, LangChain, and other code-first agent
+frameworks.
+
 ## LangGraph
 
 The LangGraph adapter exposes a verification node and a routing helper:

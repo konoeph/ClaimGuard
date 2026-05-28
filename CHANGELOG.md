@@ -8,6 +8,8 @@ All notable changes to AgentClaimGuard will be documented in this file.
 
 - Added optional deterministic claim extraction helpers.
 - Added a claim extraction template and extraction-to-verification demo.
+- Added tests and documentation for claim extraction warnings, skipped items,
+  alias handling, confidence validation, and prompt-only template behavior.
 
 ### Changed
 

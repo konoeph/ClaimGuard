@@ -113,3 +113,7 @@ safe_verdict=insufficient_evidence
 
 Extraction is not verification. The helper does not call an LLM and does not
 decide whether claims are true.
+
+Invalid claim-like items are collected in `skipped_items` with corresponding
+`warnings`, so users can inspect extraction failures without stopping an entire
+batch.

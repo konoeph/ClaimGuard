@@ -70,6 +70,71 @@ def test_create_claims_from_items_skips_invalid_items() -> None:
     assert len(result.warnings) == 3
 
 
+def test_create_claims_from_items_warning_indexes_match_skipped_items() -> None:
+    result = create_claims_from_items(
+        [
+            {"text": "Revenue increased by 15%.", "claim_type": "numeric_conclusion"},
+            "",
+            {"claim_type": "numeric_conclusion"},
+        ]
+    )
+
+    assert len(result.claims) == 1
+    assert result.skipped_items == ["", {"claim_type": "numeric_conclusion"}]
+    assert result.warnings[0].startswith("Skipped item 1:")
+    assert result.warnings[1].startswith("Skipped item 2:")
+
+
+def test_dict_claim_type_alias_is_not_overwritten_by_default_type() -> None:
+    result = create_claims_from_items(
+        [
+            {
+                "text": "Revenue increased by 15%.",
+                "claim_type": "numeric_conclusion",
+            }
+        ],
+        default_claim_type="factual_claim",
+    )
+
+    assert result.claims[0].type == "numeric_conclusion"
+
+
+def test_dict_type_takes_precedence_over_claim_type_alias() -> None:
+    result = create_claims_from_items(
+        [
+            {
+                "text": "Revenue increased by 15%.",
+                "type": "factual_claim",
+                "claim_type": "numeric_conclusion",
+            }
+        ]
+    )
+
+    assert result.claims[0].type == "factual_claim"
+
+
+def test_invalid_confidence_is_skipped_in_batch_extraction() -> None:
+    result = create_claims_from_items(
+        [
+            {
+                "text": "Revenue increased by 15%.",
+                "claim_type": "numeric_conclusion",
+                "confidence": 1.5,
+            },
+            {
+                "text": "Gross margin was 42%.",
+                "claim_type": "numeric_conclusion",
+                "confidence": 0.8,
+            },
+        ]
+    )
+
+    assert len(result.claims) == 1
+    assert result.claims[0].confidence == 0.8
+    assert len(result.skipped_items) == 1
+    assert "confidence" in result.warnings[0]
+
+
 def test_claim_extraction_template_states_boundary() -> None:
     prompt = ClaimExtractionTemplate.default().format(
         answer="Revenue increased by 15%.",
@@ -79,6 +144,21 @@ def test_claim_extraction_template_states_boundary() -> None:
     assert "Extraction is not verification." in prompt
     assert "Do not decide whether the claims are true." in prompt
     assert "numeric_conclusion" in prompt
+
+
+def test_claim_extraction_template_is_prompt_only() -> None:
+    template = ClaimExtractionTemplate.default()
+    prompt = template.format(
+        answer="Revenue increased by 15%.",
+        context="Revenue was 115. Prior revenue was 100.",
+        claim_types=["numeric_conclusion", "factual_claim"],
+    )
+
+    assert isinstance(prompt, str)
+    assert "Revenue was 115. Prior revenue was 100." in prompt
+    assert "numeric_conclusion, factual_claim" in prompt
+    assert not hasattr(template, "extract")
+    assert not hasattr(template, "invoke")
 
 
 def test_extraction_result_flows_into_verifier() -> None:

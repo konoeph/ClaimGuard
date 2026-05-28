@@ -34,3 +34,16 @@ Extraction is not verification.
 Use `ClaimExtractionTemplate.default()` when you want to ask your own LLM to
 produce claim candidates. AgentClaimGuard still verifies those claims against
 evidence, tool results, and policies afterwards.
+
+## Behavior Notes
+
+- `create_claims_from_items(...)` accepts strings, dictionaries,
+  `ClaimCandidate` objects, and existing `Claim` objects.
+- Dictionaries may use either `type` or `claim_type`; if both are present,
+  `type` wins.
+- Invalid items are collected in `skipped_items`, with matching messages in
+  `warnings`.
+- Invalid confidence values are skipped in batch extraction instead of stopping
+  the whole batch.
+- `ClaimExtractionTemplate.default()` only returns a prompt template. It does
+  not call a model.

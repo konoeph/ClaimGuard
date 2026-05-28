@@ -38,6 +38,27 @@ gives JSON, but does not guarantee the judgment is valid.
 AgentClaimGuard adds a lightweight runtime layer to verify claims before they are
 returned to users.
 
+## Tiny Example
+
+An agent says:
+
+```text
+Revenue increased by 15%.
+```
+
+The workflow provides source facts, but no calculator result.
+
+AgentClaimGuard returns:
+
+```text
+status=blocked
+claim_status=tool_required
+safe_verdict=insufficient_evidence
+```
+
+The answer can be routed to repair, retrieval, or human review instead of being
+returned directly.
+
 ## Install
 
 Install from PyPI:

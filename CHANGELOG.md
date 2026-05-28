@@ -7,6 +7,7 @@ All notable changes to AgentClaimGuard will be documented in this file.
 ### Changed
 
 - Added a top-level PyPI install note to the README.
+- Added a tiny README example showing a blocked numeric claim without a required tool result.
 
 ## [0.3.2] - 2026-05-27
 
